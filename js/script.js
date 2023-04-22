@@ -14,7 +14,7 @@ let options = {
   frutas: [
     "Manzana",
     "Fresas",
-    "Mandarian",
+    "Mandarina",
     "Piña",
     "Pomelo",
     "Sandia",
