@@ -11,30 +11,61 @@ const resultText = document.getElementById("result-text");
 
 //Objeto opciones donde dentro de el tiene 3 propiedades que son las listas con las opciones en un array
 let options = {
-  frutas: [
-    "Manzana",
-    "Fresas",
-    "Mandarina",
-    "Piña",
-    "Pomelo",
-    "Sandia",
-  ],
-  animales: [
-    "Leon",
-    "Jirafa",
-    "Tigre",
-    "Rinoceronte",
-    "Murcielago",
-    "Canguro"],
-  paises: [
-    "India",
-    "Hungria",
-    "Alemania",
-    "Suiza",
-    "Zimbawe",
-    "España",
-  ],
-};
+    frutas: [
+      "Manzana",
+      "Fresas",
+      "Mandarina",
+      "Piña",
+      "Pomelo",
+      "Sandia",
+    ],
+    animales: [
+      "Leon",
+      "Jirafa",
+      "Tigre",
+      "Rinoceronte",
+      "Murcielago",
+      "Canguro"],
+    paises: [
+      "India",
+      "Hungria",
+      "Alemania",
+      "Suiza",
+      "Zimbawe",
+      "España",
+    ],
+  };
+
+let letters = {
+    letras: [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "Ñ",
+      "P",
+      "Q",
+      "R",
+      "S",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y",
+      "Z",
+    ],
+  };
 
 //Definimos los contadores que luego utilizaremos
 let winCount = 0;
@@ -45,14 +76,13 @@ let chosenWord = "";
 //Mostramos las opciones a elegir
 
 const displayOptions = () => {
-  optionsContainer.innerHTML += `<h3>Selecciona una Tematica  </h3>`;
+  optionsContainer.innerHTML += `<h3>Selecciona una Tematica</h3>`;
   let buttonCon = document.createElement("div");
   for (let value in options) {
     buttonCon.innerHTML += `<button class="options" onclick="generateWord('${value}')">${value}</button>`;
   }
   optionsContainer.appendChild(buttonCon);
 };
-
 
 //Creamos una funcion para desactivar todos los botones
 const blocker = () => {
@@ -89,7 +119,6 @@ const generateWord = (optionValue) => {
 
   userInputSection.innerText = "";
 
-
   let optionArray = options[optionValue];
   //Escogemos una palabra aleatoria dentro del array elegido
   chosenWord = optionArray[Math.floor(Math.random() * optionArray.length)];
@@ -106,7 +135,13 @@ const generateWord = (optionValue) => {
   userInputSection.innerHTML = displayItem;
 
   console.log(chosenWord);
+  saveStateWord(chosenWord);
 };
+
+const newGame = () => {
+  initializer()
+  localStorage.clear();
+}
 
 //Declaramos la funciona inicial la cual se llamara cuando el usuario carge la pagina o haga una nueva partida
 const initializer = () => {
@@ -120,25 +155,19 @@ const initializer = () => {
   newGameContainer.classList.add("hide");
   letterContainer.innerHTML = "";
 
-
   //Creamos todos los botones con sus letras
-  for (let i = 65; i < 91; i++) {
 
-    let button = document.createElement("button");
-    button.classList.add("letters");
-
-    //Covertimos el numero en string para que nos de la letra.
-    button.innerText = String.fromCharCode(i);
-
-    //Hacemos lo mismo pero para añadir la ñ
-    if (i == 79) {
+  const createLetters = () => {
+    for (let i = 0; i < letters.letras.length; i++) {
+      let button = document.createElement("button");
       button.classList.add("letters");
-      button.innerText = String.fromCharCode(209);
+  
+      button.innerText = letters.letras[i];
+  
+      letterContainer.append(button);
+  
+      clickBtn(button)
     }
-
-    letterContainer.append(button);
-
-    clickBtn(button)
   }
 
   //Desactivamos las letras hasta que no hayamos elegido una opcion
@@ -177,10 +206,15 @@ const initializer = () => {
       } else {
         
         loseCount += 1;
+        saveState(loseCount);
+        
+        let test = loadState(loseCount)
+        let test1 = parseInt(test)
+        console.log(test1);
 
         //Dibujamos el muñeco dependiendo de el numero que haya en la variable loseCount
-        drawMan(loseCount);
-        
+        drawMan(test1);
+
         if (loseCount == 6) {
           resultText.innerHTML = `<h2 class='lose-msg'>Has Perdido!!</h2><p>La palabra era: <span>${chosenWord}</span></p>`;
           let lose = new Audio('audio/lose.mp3');
@@ -194,7 +228,8 @@ const initializer = () => {
     }
 
   displayOptions();
-  
+  createLetters();
+
   let { initialDrawing } = canvasCreator();
   
   initialDrawing();
@@ -257,6 +292,27 @@ const canvasCreator = () => {
   return { initialDrawing, head, body, leftArm, rightArm, leftLeg, rightLeg };
 };
 
+const saveState = (loseCount) => {
+  // localstorage solo guarda strings, por eso teng que convertir el objeto state a string
+  localStorage.setItem('loseCountState', loseCount);
+};
+
+const saveStateWord = (word) => {
+  // localstorage solo guarda strings, por eso teng que convertir el objeto state a string
+  localStorage.setItem('randomWord', word);
+};
+
+const loadStateWord = (word) => {
+  // localstorage solo guarda strings, por eso teng que convertir el objeto state a string
+  let i = localStorage.getItem('randomWord', word);
+  return i
+};
+
+const loadState = (loseCount) => {
+  // localstorage solo guarda strings, por eso teng que convertir el objeto state a string
+  let i = localStorage.getItem('loseCountState', loseCount);
+  return i
+};
 //draw the man
 const drawMan = (count) => {
   let { head, body, leftArm, rightArm, leftLeg, rightLeg } = canvasCreator();
@@ -285,5 +341,5 @@ const drawMan = (count) => {
 };
 
 //New Game
-newGameButton.addEventListener("click", initializer);
+newGameButton.addEventListener("click", newGame);
 window.onload = initializer;
