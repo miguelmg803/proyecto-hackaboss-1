@@ -1,6 +1,6 @@
 'use strict'
 
-// Definimos las referencias iniciales que vayamos a utilizar.
+//Definimos las referencias iniciales que vayamos a utilizar
 const letterContainer = document.getElementById("letter-container");
 const optionsContainer = document.getElementById("options-container");
 const userInputSection = document.getElementById("user-input-section");
@@ -9,9 +9,10 @@ const newGameButton = document.getElementById("new-game-button");
 const canvas = document.getElementById("canvas");
 const resultText = document.getElementById("result-text");
 
+
 // Objeto opciones donde dentro tiene 3 propiedades que son las listas con las opciones en un array.
 let options = {
-  Frutas: [
+  frutas: [
     "Manzana",
     "Fresas",
     "Mandarina",
@@ -34,7 +35,7 @@ let options = {
     "Ciruela",
     "Higo",
   ],
-  Animales: [
+  animales: [
     "Leon",
     "Jirafa",
     "Tigre",
@@ -65,7 +66,7 @@ let options = {
     "Ballena",
     "Tiburon",
   ],
-  Países: [
+  paises: [
     "India",
     "Hungria",
     "Alemania",
@@ -98,9 +99,8 @@ let loseCount = 0;
 
 let chosenWord = "";
 
-// Mostramos las opciones a elegir.
 const displayOptions = () => {
-  optionsContainer.innerHTML += `<h3>Selecciona una Temática</h3>`;
+  optionsContainer.innerHTML += `<h3>Selecciona una Tematica  </h3>`;
   let buttonCon = document.createElement("div");
   for (let value in options) {
     buttonCon.innerHTML += `<button class="options" onclick="generateWord('${value}')">${value}</button>`;
@@ -108,8 +108,7 @@ const displayOptions = () => {
   optionsContainer.appendChild(buttonCon);
 };
 
-
-// Creamos una función para desactivar todos los botones.
+//Creamos una funcion para desactivar todos los botones
 const blocker = () => {
   let optionsButtons = document.querySelectorAll(".options");
   let letterButtons = document.querySelectorAll(".letters");
@@ -124,11 +123,11 @@ const blocker = () => {
   newGameContainer.classList.remove("hide");
 };
 
-// Creamos una función donde elegiremos la palabra aleatoria del array que hayamos elegido.
+//Creamos una funcion donde elegiremos la palabra aleatoria del array que hayamos elegido
 const generateWord = (optionValue) => {
   let optionsButtons = document.querySelectorAll(".options");
 
-  // Si el valor de optionValue es igual le añadimos una clase "active" para resaltarla.
+  //si el valor de optionValue es igual le añadimos una clase "active" para resaltarla
   optionsButtons.forEach((button) => {
     if (button.innerText.toLowerCase() === optionValue) {
       button.classList.add("active");
@@ -146,8 +145,8 @@ const generateWord = (optionValue) => {
 
 
   let optionArray = options[optionValue];
-
-  // Escogemos una palabra aleatoria dentro del array elegido.
+  
+  //Escogemos una palabra aleatoria dentro del array elegido
   chosenWord = optionArray[Math.floor(Math.random() * optionArray.length)];
   chosenWord = chosenWord.toUpperCase();
 
@@ -156,7 +155,7 @@ const generateWord = (optionValue) => {
     button.disabled = false;
   });
 
-  // Reemplazamos cada letra con un guion bajo y un spam.
+  //Remplazamos cada letra con un guion bajo y un spam
   let displayItem = chosenWord.replace(/./g, '<span class="dashes">_</span>');
 
   userInputSection.innerHTML = displayItem;
@@ -164,12 +163,12 @@ const generateWord = (optionValue) => {
   console.log(chosenWord);
 };
 
-// Declaramos la función inicial, la cual se llamará cuando el usuario cargue la página o inicie una nueva partida.
+//Declaramos la funciona inicial la cual se llamara cuando el usuario carge la pagina o haga una nueva partida
 const initializer = () => {
   winCount = 0;
   loseCount = 0;
 
-  // Borramos todo el contenido y escondemos las letras y el botón de nueva partida.
+  //Borramos todo el contenido y escondemos las letras y el boton de nueva partida
   userInputSection.innerHTML = "";
   optionsContainer.innerHTML = "";
   letterContainer.classList.add("hide");
@@ -177,7 +176,7 @@ const initializer = () => {
   letterContainer.innerHTML = "";
 
 
-  // Creamos todos los botones con sus letras.
+  //Creamos todos los botones con sus letras
   for (let i = 65; i < 91; i++) {
 
     let button = document.createElement("button");
@@ -197,13 +196,13 @@ const initializer = () => {
     clickBtn(button)
   }
 
-  // Desactivamos las letras hasta que no hayamos elegido una opción
+  //Desactivamos las letras hasta que no hayamos elegido una opcion
   let btnDis = document.querySelectorAll(".letters")
   btnDis.forEach((button) => {
     button.disabled = true;
   });
 
-  // Hacemos la función clickBtn para crear un eventlistener que gestione la letra que hemos seleccionado.
+  //Hacemos la funciona clickBtn para crear un enventlistener que gestione la letra que hemos seleccionado
   function clickBtn(btn) {
 
     btn.addEventListener("click", () => {
@@ -211,7 +210,7 @@ const initializer = () => {
       console.log(charArray);
       let dashes = document.getElementsByClassName("dashes");
 
-      // Si el array contiene la letra que hemos seleccionado, reemplazamos el guión por la letra, si no, sumamos un fallo y lo dibujamos.
+      //Si el array contiene la letra que hayamos seleccionado, remplazamos el guion por la letra,si no sumamos un fallo y lo dibujamos.
       if (charArray.includes(btn.innerText)) {
         charArray.forEach((char, index) => {
             
@@ -225,7 +224,11 @@ const initializer = () => {
             if (winCount == charArray.length) {
               resultText.innerHTML = `<h2 class='win-msg'>¡¡Has Ganado!!</h2><p>La palabra era: <span>${chosenWord}</span></p>`;
 
-                // Definimos beat, para poder ejecutarlo y reproducir un audio
+            // Definimos beat, para poder ejecutarlo y reproducir un audio
+            //Si la variable equivale al tamaño de la letra dariamos la partida como ganada
+            if (winCount == charArray.length) {
+              resultText.innerHTML = `<h2 class='win-msg'>Has Ganado!!</h2><p>La palabra era: <span>${chosenWord}</span></p>`;
+                //Definimos beat, para poder ejecutarlo y reproducir un audio
                 let beat = new Audio('audio/win.mp3');
                 beat.play();
 
@@ -237,7 +240,7 @@ const initializer = () => {
         
         loseCount += 1;
 
-        // Dibujamos el muñeco dependiendo del número que haya en la variable loseCount.
+        //Dibujamos el muñeco dependiendo de el numero que haya en la variable loseCount
         drawMan(loseCount);
         
         if (loseCount == 6) {
@@ -259,7 +262,7 @@ const initializer = () => {
   initialDrawing();
 };
 
-// Canvas
+//Canvas
 const canvasCreator = () => {
   let context = canvas.getContext("2d");
   context.beginPath();
@@ -315,6 +318,7 @@ const canvasCreator = () => {
 
   return { initialDrawing, head, body, leftArm, rightArm, leftLeg, rightLeg };
 };
+
 
 // Función para dibujar al ahorcado.
 const drawMan = (count) => {
