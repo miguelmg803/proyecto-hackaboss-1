@@ -18,6 +18,21 @@ let options = {
     "Piña",
     "Pomelo",
     "Sandia",
+    "Pera",
+    "Arandano",
+    "Grosella",
+    "Datil",
+    "Coco",
+    "Mango",
+    "Aguacate",
+    "Kiwi",
+    "Albaricoque",
+    "Cereza",
+    "Uva",
+    "Nectarina",
+    "Kaki",
+    "Ciruela",
+    "Higo",
   ],
   Animales: [
     "Leon",
@@ -25,7 +40,31 @@ let options = {
     "Tigre",
     "Rinoceronte",
     "Murcielago",
-    "Canguro"],
+    "Canguro",
+    "Vaca",
+    "Toro",
+    "Zorro",
+    "Mapache",
+    "Ciervo",
+    "Reno",
+    "Bisonte",
+    "Aguila",
+    "Paloma",
+    "Gorrion",
+    "Gaviota",
+    "Lince",
+    "Antilope",
+    "Perro",
+    "Gato",
+    "Rana",
+    "Hormiga",
+    "Escarabajo",
+    "Araña",
+    "Colibri",
+    "Elefante",
+    "Ballena",
+    "Tiburon",
+  ],
   Países: [
     "India",
     "Hungria",
@@ -33,6 +72,23 @@ let options = {
     "Suiza",
     "Zimbawe",
     "España",
+    "Australia",
+    "Austria",
+    "China",
+    "Inglaterra",
+    "Argentina",
+    "Uruguay",
+    "Brasil",
+    "Peru",
+    "Chile",
+    "Congo",
+    "Sudan",
+    "Kazajistan",
+    "Ucrania",
+    "Rusia",
+    "Polonia",
+    "Mexico",
+    "Cuba",
   ],
 };
 
@@ -43,7 +99,6 @@ let loseCount = 0;
 let chosenWord = "";
 
 // Mostramos las opciones a elegir.
-
 const displayOptions = () => {
   optionsContainer.innerHTML += `<h3>Selecciona una Temática</h3>`;
   let buttonCon = document.createElement("div");
@@ -148,7 +203,7 @@ const initializer = () => {
     button.disabled = true;
   });
 
-  // Hacemos la función clickBtn para crear un enventlistener que gestione la letra que hemos seleccionado.
+  // Hacemos la función clickBtn para crear un eventlistener que gestione la letra que hemos seleccionado.
   function clickBtn(btn) {
 
     btn.addEventListener("click", () => {
@@ -156,7 +211,7 @@ const initializer = () => {
       console.log(charArray);
       let dashes = document.getElementsByClassName("dashes");
 
-      // Si el array contiene la letra que hayamos seleccionado, reemplazamos el guión por la letra, si no, sumamos un fallo y lo dibujamos.
+      // Si el array contiene la letra que hemos seleccionado, reemplazamos el guión por la letra, si no, sumamos un fallo y lo dibujamos.
       if (charArray.includes(btn.innerText)) {
         charArray.forEach((char, index) => {
             
@@ -166,9 +221,9 @@ const initializer = () => {
             
             winCount += 1;
 
-            // Si la variable equivale al tamaño de la letra daríamos la partida como ganada.
+            // Si la variable equivale al tamaño de la letra damos la partida como ganada.
             if (winCount == charArray.length) {
-              resultText.innerHTML = `<h2 class='win-msg'>Has Ganado!!</h2><p>La palabra era: <span>${chosenWord}</span></p>`;
+              resultText.innerHTML = `<h2 class='win-msg'>¡¡Has Ganado!!</h2><p>La palabra era: <span>${chosenWord}</span></p>`;
 
                 // Definimos beat, para poder ejecutarlo y reproducir un audio
                 let beat = new Audio('audio/win.mp3');

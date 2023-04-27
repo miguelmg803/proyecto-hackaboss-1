@@ -30,7 +30,14 @@ h1 {
 
 #options-container {
     border-style: double;
-    margin: 5px;
+    margin: 10px;
+    padding: 7.5px;
+}
+
+#letter-container {
+    border-style: double;
+    margin: 10px;
+    padding: 7.5px;
 }
 
 button {
