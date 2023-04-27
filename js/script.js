@@ -9,7 +9,8 @@ const newGameButton = document.getElementById("new-game-button");
 const canvas = document.getElementById("canvas");
 const resultText = document.getElementById("result-text");
 
-//Objeto opciones donde dentro de el tiene 3 propiedades que son las listas con las opciones en un array
+
+// Objeto opciones donde dentro tiene 3 propiedades que son las listas con las opciones en un array.
 let options = {
   frutas: [
     "Manzana",
@@ -18,6 +19,21 @@ let options = {
     "Piña",
     "Pomelo",
     "Sandia",
+    "Pera",
+    "Arandano",
+    "Grosella",
+    "Datil",
+    "Coco",
+    "Mango",
+    "Aguacate",
+    "Kiwi",
+    "Albaricoque",
+    "Cereza",
+    "Uva",
+    "Nectarina",
+    "Kaki",
+    "Ciruela",
+    "Higo",
   ],
   animales: [
     "Leon",
@@ -25,7 +41,31 @@ let options = {
     "Tigre",
     "Rinoceronte",
     "Murcielago",
-    "Canguro"],
+    "Canguro",
+    "Vaca",
+    "Toro",
+    "Zorro",
+    "Mapache",
+    "Ciervo",
+    "Reno",
+    "Bisonte",
+    "Aguila",
+    "Paloma",
+    "Gorrion",
+    "Gaviota",
+    "Lince",
+    "Antilope",
+    "Perro",
+    "Gato",
+    "Rana",
+    "Hormiga",
+    "Escarabajo",
+    "Araña",
+    "Colibri",
+    "Elefante",
+    "Ballena",
+    "Tiburon",
+  ],
   paises: [
     "India",
     "Hungria",
@@ -33,16 +73,31 @@ let options = {
     "Suiza",
     "Zimbawe",
     "España",
+    "Australia",
+    "Austria",
+    "China",
+    "Inglaterra",
+    "Argentina",
+    "Uruguay",
+    "Brasil",
+    "Peru",
+    "Chile",
+    "Congo",
+    "Sudan",
+    "Kazajistan",
+    "Ucrania",
+    "Rusia",
+    "Polonia",
+    "Mexico",
+    "Cuba",
   ],
 };
 
-//Definimos los contadores que luego utilizaremos
+// Definimos los contadores que luego utilizaremos.
 let winCount = 0;
 let loseCount = 0;
 
 let chosenWord = "";
-
-//Mostramos las opciones a elegir
 
 const displayOptions = () => {
   optionsContainer.innerHTML += `<h3>Selecciona una Tematica  </h3>`;
@@ -52,7 +107,6 @@ const displayOptions = () => {
   }
   optionsContainer.appendChild(buttonCon);
 };
-
 
 //Creamos una funcion para desactivar todos los botones
 const blocker = () => {
@@ -91,6 +145,7 @@ const generateWord = (optionValue) => {
 
 
   let optionArray = options[optionValue];
+  
   //Escogemos una palabra aleatoria dentro del array elegido
   chosenWord = optionArray[Math.floor(Math.random() * optionArray.length)];
   chosenWord = chosenWord.toUpperCase();
@@ -127,10 +182,10 @@ const initializer = () => {
     let button = document.createElement("button");
     button.classList.add("letters");
 
-    //Covertimos el numero en string para que nos de la letra.
+    // Convertimos el número en string para que nos dé la letra.
     button.innerText = String.fromCharCode(i);
 
-    //Hacemos lo mismo pero para añadir la ñ
+    // Hacemos lo mismo pero para añadir la ñ.
     if (i == 79) {
       button.classList.add("letters");
       button.innerText = String.fromCharCode(209);
@@ -154,6 +209,7 @@ const initializer = () => {
       let charArray = chosenWord.split("");
       console.log(charArray);
       let dashes = document.getElementsByClassName("dashes");
+
       //Si el array contiene la letra que hayamos seleccionado, remplazamos el guion por la letra,si no sumamos un fallo y lo dibujamos.
       if (charArray.includes(btn.innerText)) {
         charArray.forEach((char, index) => {
@@ -163,6 +219,12 @@ const initializer = () => {
             dashes[index].innerText = char;
             
             winCount += 1;
+
+            // Si la variable equivale al tamaño de la letra damos la partida como ganada.
+            if (winCount == charArray.length) {
+              resultText.innerHTML = `<h2 class='win-msg'>¡¡Has Ganado!!</h2><p>La palabra era: <span>${chosenWord}</span></p>`;
+
+            // Definimos beat, para poder ejecutarlo y reproducir un audio
             //Si la variable equivale al tamaño de la letra dariamos la partida como ganada
             if (winCount == charArray.length) {
               resultText.innerHTML = `<h2 class='win-msg'>Has Ganado!!</h2><p>La palabra era: <span>${chosenWord}</span></p>`;
@@ -207,7 +269,7 @@ const canvasCreator = () => {
   context.strokeStyle = "#000";
   context.lineWidth = 2;
 
-  //For drawing lines
+  // Función para dibujar las líneas.
   const drawLine = (fromX, fromY, toX, toY) => {
     context.moveTo(fromX, fromY);
     context.lineTo(toX, toY);
@@ -240,24 +302,25 @@ const canvasCreator = () => {
     drawLine(70, 80, 90, 110);
   };
 
-  //initial frame
+  // Función que determine el dibujo base del palo.
   const initialDrawing = () => {
-    //clear canvas
+    // Borrar el canvas
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    //bottom line
+    // Línea del fondo
     drawLine(10, 130, 130, 130);
-    //left line
+    // Línea izquierda.
     drawLine(10, 10, 10, 131);
-    //top line
+    // Línea superior.
     drawLine(10, 10, 70, 10);
-    //small top line
+    // Línea pequeña superior.
     drawLine(70, 10, 70, 20);
   };
 
   return { initialDrawing, head, body, leftArm, rightArm, leftLeg, rightLeg };
 };
 
-//draw the man
+
+// Función para dibujar al ahorcado.
 const drawMan = (count) => {
   let { head, body, leftArm, rightArm, leftLeg, rightLeg } = canvasCreator();
   switch (count) {
@@ -284,6 +347,6 @@ const drawMan = (count) => {
   }
 };
 
-//New Game
+// Nueva partida.
 newGameButton.addEventListener("click", initializer);
 window.onload = initializer;
