@@ -33,30 +33,86 @@ const loadStateLose = (loseCount) => {
 
 //Objeto opciones donde dentro de el tiene 3 propiedades que son las listas con las opciones en un array
 let options = {
-    frutas: [
-      "Manzana",
-      "Fresas",
-      "Mandarina",
-      "Piña",
-      "Pomelo",
-      "Sandia",
-    ],
-    animales: [
-      "Leon",
-      "Jirafa",
-      "Tigre",
-      "Rinoceronte",
-      "Murcielago",
-      "Canguro"],
-    paises: [
-      "India",
-      "Hungria",
-      "Alemania",
-      "Suiza",
-      "Zimbawe",
-      "España",
-    ],
-  };
+  frutas: [
+    "Manzana",
+    "Fresas",
+    "Mandarina",
+    "Piña",
+    "Pomelo",
+    "Sandia",
+    "Pera",
+    "Arandano",
+    "Grosella",
+    "Datil",
+    "Coco",
+    "Mango",
+    "Aguacate",
+    "Kiwi",
+    "Albaricoque",
+    "Cereza",
+    "Uva",
+    "Nectarina",
+    "Kaki",
+    "Ciruela",
+    "Higo",
+  ],
+  animales: [
+    "Leon",
+    "Jirafa",
+    "Tigre",
+    "Rinoceronte",
+    "Murcielago",
+    "Canguro",
+    "Vaca",
+    "Toro",
+    "Zorro",
+    "Mapache",
+    "Ciervo",
+    "Reno",
+    "Bisonte",
+    "Aguila",
+    "Paloma",
+    "Gorrion",
+    "Gaviota",
+    "Lince",
+    "Antilope",
+    "Perro",
+    "Gato",
+    "Rana",
+    "Hormiga",
+    "Escarabajo",
+    "Araña",
+    "Colibri",
+    "Elefante",
+    "Ballena",
+    "Tiburon",
+  ],
+  paises: [
+    "India",
+    "Hungria",
+    "Alemania",
+    "Suiza",
+    "Zimbawe",
+    "España",
+    "Australia",
+    "Austria",
+    "China",
+    "Inglaterra",
+    "Argentina",
+    "Uruguay",
+    "Brasil",
+    "Peru",
+    "Chile",
+    "Congo",
+    "Sudan",
+    "Kazajistan",
+    "Ucrania",
+    "Rusia",
+    "Polonia",
+    "Mexico",
+    "Cuba",
+  ],
+};
 
 let letters = {
     letras: [
@@ -303,7 +359,7 @@ const canvasCreator = () => {
   context.strokeStyle = "#000";
   context.lineWidth = 2;
 
-  //For drawing lines
+  // Función para dibujar las líneas.
   const drawLine = (fromX, fromY, toX, toY) => {
     context.moveTo(fromX, fromY);
     context.lineTo(toX, toY);
@@ -353,7 +409,7 @@ const canvasCreator = () => {
   return { initialDrawing, head, body, leftArm, rightArm, leftLeg, rightLeg };
 };
 
-//draw the man
+// Función para dibujar al ahorcado.
 const drawMan = (count) => {
   let { head, body, leftArm, rightArm, leftLeg, rightLeg } = canvasCreator();
   switch (count) {
@@ -380,6 +436,6 @@ const drawMan = (count) => {
   }
 };
 
-//New Game
+// Nueva partida.
 newGameButton.addEventListener("click", newGame);
 window.onload = initializer;
