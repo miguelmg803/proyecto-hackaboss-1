@@ -9,8 +9,29 @@ const newGameButton = document.getElementById("new-game-button");
 const canvas = document.getElementById("canvas");
 const resultText = document.getElementById("result-text");
 
+const saveStateLose = (loseCount) => {
+  // localstorage solo guarda strings, por eso teng que convertir el objeto state a string
+  localStorage.setItem('loseCountState', loseCount);
+};
 
-// Objeto opciones donde dentro tiene 3 propiedades que son las listas con las opciones en un array.
+const saveStateWord = (word) => {
+  // localstorage solo guarda strings, por eso teng que convertir el objeto state a string
+  localStorage.setItem('randomWord', word);
+};
+
+const loadStateWord = (word) => {
+  // localstorage solo guarda strings, por eso teng que convertir el objeto state a string
+  let i = localStorage.getItem('randomWord', word);
+  return i
+};
+
+const loadStateLose = (loseCount) => {
+  // localstorage solo guarda strings, por eso teng que convertir el objeto state a string
+  let i = parseInt(localStorage.getItem('loseCountState', loseCount));
+  return i
+};
+
+//Objeto opciones donde dentro de el tiene 3 propiedades que son las listas con las opciones en un array
 let options = {
   frutas: [
     "Manzana",
@@ -93,14 +114,57 @@ let options = {
   ],
 };
 
-// Definimos los contadores que luego utilizaremos.
+let letters = {
+    letras: [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "Ñ",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "S",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y",
+      "Z",
+    ],
+  };
+
+//Definimos los contadores que luego utilizaremos
 let winCount = 0;
 let loseCount = 0;
 
-let chosenWord = "";
+let chosenWord = loadStateWord();
+
+//Mostramos las opciones a elegir
+
+const displayOptionsLoad = () => {
+  optionsContainer.innerHTML += `<h3>Selecciona una Tematica</h3>`;
+  let buttonCon = document.createElement("div");
+  for (let value in options) {
+    buttonCon.innerHTML += `<button class="options" disabled>${value}</button>`;
+  }
+  optionsContainer.appendChild(buttonCon);
+};
 
 const displayOptions = () => {
-  optionsContainer.innerHTML += `<h3>Selecciona una Tematica  </h3>`;
+  optionsContainer.innerHTML += `<h3>Selecciona una Tematica</h3>`;
   let buttonCon = document.createElement("div");
   for (let value in options) {
     buttonCon.innerHTML += `<button class="options" onclick="generateWord('${value}')">${value}</button>`;
@@ -123,8 +187,10 @@ const blocker = () => {
   newGameContainer.classList.remove("hide");
 };
 
+
 //Creamos una funcion donde elegiremos la palabra aleatoria del array que hayamos elegido
 const generateWord = (optionValue) => {
+  
   let optionsButtons = document.querySelectorAll(".options");
 
   //si el valor de optionValue es igual le añadimos una clase "active" para resaltarla
@@ -143,9 +209,7 @@ const generateWord = (optionValue) => {
 
   userInputSection.innerText = "";
 
-
   let optionArray = options[optionValue];
-  
   //Escogemos una palabra aleatoria dentro del array elegido
   chosenWord = optionArray[Math.floor(Math.random() * optionArray.length)];
   chosenWord = chosenWord.toUpperCase();
@@ -161,46 +225,84 @@ const generateWord = (optionValue) => {
   userInputSection.innerHTML = displayItem;
 
   console.log(chosenWord);
+  saveStateWord(chosenWord);
 };
+
+const newGame = () => {
+  
+  winCount = 0;
+  loseCount = 0;
+  initializer()
+  localStorage.clear();
+}
 
 //Declaramos la funciona inicial la cual se llamara cuando el usuario carge la pagina o haga una nueva partida
 const initializer = () => {
-  winCount = 0;
-  loseCount = 0;
+  
+if (loadStateWord() == undefined) {
+    //Borramos todo el contenido y escondemos las letras y el boton de nueva partida
+    userInputSection.innerHTML = "";
+    optionsContainer.innerHTML = "";
+    letterContainer.classList.add("hide");
+    newGameContainer.classList.add("hide");
+    letterContainer.innerHTML = "";
+  
+    //Creamos todos los botones con sus letras
+      for (let i = 0; i < letters.letras.length; i++) {
+        let button = document.createElement("button");
+        button.classList.add("letters");
+    
+        button.innerText = letters.letras[i];
+    
+        letterContainer.append(button);
+    
+        clickBtn(button)
+      }
+  
+    //Desactivamos las letras hasta que no hayamos elegido una opcion
+    let btnDis = document.querySelectorAll(".letters")
+    btnDis.forEach((button) => {
+      button.disabled = true;
+    });
+  
+  
+    displayOptions();
+  
+    let { initialDrawing } = canvasCreator();
+    
+    initialDrawing();
 
-  //Borramos todo el contenido y escondemos las letras y el boton de nueva partida
+} else {
+
   userInputSection.innerHTML = "";
   optionsContainer.innerHTML = "";
-  letterContainer.classList.add("hide");
-  newGameContainer.classList.add("hide");
   letterContainer.innerHTML = "";
 
-
   //Creamos todos los botones con sus letras
-  for (let i = 65; i < 91; i++) {
-
-    let button = document.createElement("button");
-    button.classList.add("letters");
-
-    // Convertimos el número en string para que nos dé la letra.
-    button.innerText = String.fromCharCode(i);
-
-    // Hacemos lo mismo pero para añadir la ñ.
-    if (i == 79) {
+    for (let i = 0; i < letters.letras.length; i++) {
+      let button = document.createElement("button");
       button.classList.add("letters");
-      button.innerText = String.fromCharCode(209);
+  
+      button.innerText = letters.letras[i];
+  
+      letterContainer.append(button);
+  
+      clickBtn(button)
     }
 
-    letterContainer.append(button);
+  let displayItem = chosenWord.replace(/./g, '<span class="dashes">_</span>');
 
-    clickBtn(button)
-  }
+  userInputSection.innerHTML = displayItem;
+  
+  letterContainer.classList.remove("hide");
 
-  //Desactivamos las letras hasta que no hayamos elegido una opcion
-  let btnDis = document.querySelectorAll(".letters")
-  btnDis.forEach((button) => {
-    button.disabled = true;
-  });
+  displayOptionsLoad();
+  
+  let { initialDrawing } = canvasCreator();
+
+  initialDrawing();
+  
+}
 
   //Hacemos la funciona clickBtn para crear un enventlistener que gestione la letra que hemos seleccionado
   function clickBtn(btn) {
@@ -209,7 +311,6 @@ const initializer = () => {
       let charArray = chosenWord.split("");
       console.log(charArray);
       let dashes = document.getElementsByClassName("dashes");
-
       //Si el array contiene la letra que hayamos seleccionado, remplazamos el guion por la letra,si no sumamos un fallo y lo dibujamos.
       if (charArray.includes(btn.innerText)) {
         charArray.forEach((char, index) => {
@@ -219,12 +320,6 @@ const initializer = () => {
             dashes[index].innerText = char;
             
             winCount += 1;
-
-            // Si la variable equivale al tamaño de la letra damos la partida como ganada.
-            if (winCount == charArray.length) {
-              resultText.innerHTML = `<h2 class='win-msg'>¡¡Has Ganado!!</h2><p>La palabra era: <span>${chosenWord}</span></p>`;
-
-            // Definimos beat, para poder ejecutarlo y reproducir un audio
             //Si la variable equivale al tamaño de la letra dariamos la partida como ganada
             if (winCount == charArray.length) {
               resultText.innerHTML = `<h2 class='win-msg'>Has Ganado!!</h2><p>La palabra era: <span>${chosenWord}</span></p>`;
@@ -233,16 +328,16 @@ const initializer = () => {
                 beat.play();
 
               blocker();
+
             }
           }
         });
       } else {
-        
+    
         loseCount += 1;
-
         //Dibujamos el muñeco dependiendo de el numero que haya en la variable loseCount
         drawMan(loseCount);
-        
+
         if (loseCount == 6) {
           resultText.innerHTML = `<h2 class='lose-msg'>Has Perdido!!</h2><p>La palabra era: <span>${chosenWord}</span></p>`;
           let lose = new Audio('audio/lose.mp3');
@@ -254,12 +349,7 @@ const initializer = () => {
       btn.disabled = true;
     });
     }
-
-  displayOptions();
   
-  let { initialDrawing } = canvasCreator();
-  
-  initialDrawing();
 };
 
 //Canvas
@@ -302,23 +392,22 @@ const canvasCreator = () => {
     drawLine(70, 80, 90, 110);
   };
 
-  // Función que determine el dibujo base del palo.
+  //initial frame
   const initialDrawing = () => {
-    // Borrar el canvas
+    //clear canvas
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    // Línea del fondo
+    //bottom line
     drawLine(10, 130, 130, 130);
-    // Línea izquierda.
+    //left line
     drawLine(10, 10, 10, 131);
-    // Línea superior.
+    //top line
     drawLine(10, 10, 70, 10);
-    // Línea pequeña superior.
+    //small top line
     drawLine(70, 10, 70, 20);
   };
 
   return { initialDrawing, head, body, leftArm, rightArm, leftLeg, rightLeg };
 };
-
 
 // Función para dibujar al ahorcado.
 const drawMan = (count) => {
@@ -348,5 +437,5 @@ const drawMan = (count) => {
 };
 
 // Nueva partida.
-newGameButton.addEventListener("click", initializer);
+newGameButton.addEventListener("click", newGame);
 window.onload = initializer;
