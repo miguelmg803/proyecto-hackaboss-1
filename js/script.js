@@ -101,7 +101,7 @@ const generateWord = (optionValue) => {
   });
 
   //Remplazamos cada letra con un guion bajo y un spam
-  let displayItem = chosenWord.replace(/./g, '<span class="dashes">_</span>');
+  let displayItem = chosenWord.replace(/./g, '<span class="dashes">_ </span>');
 
   userInputSection.innerHTML = displayItem;
 
