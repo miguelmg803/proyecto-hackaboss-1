@@ -1,5 +1,4 @@
 
-
 * {
     padding: 0;
     margin: 0;
@@ -88,6 +87,7 @@
     border-radius: 0.6em;
   }
 
+
   
   #user-input-section {
     display: flex;
@@ -129,81 +129,3 @@
     color: #b71414;
   }
 
-
-
-  /*primera prueba
-*/
-
-/*
-body {
-    margin: 0;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    color: #500c0c;
-    text-align: center;
-    padding: 20px;
-    background: rgba(128, 125, 125, 0.7);
-    
-}
-
-h1 { 
-    text-align: center;
-    color: #610c0c;
-    font-size: 60px;
-}
-
-h3 {
-    display: flex;
-}
-
-
-canvas {
-    display: flex;
-    width: 650px;
-}
-
-
-
-#letterContainer {
-    margin: 0,7px;
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-        
-}
-
-.options {
-
-   
-}
-
-button[disabled]{
-    border: 1px solid #999999;
-    background-color: #cccccc;
-    color: #666666;
-  }
-
-button {
-    margin-top: 25px; 
-    margin: 5px; 
-    appearance: auto;
-    background:rgba(59, 1, 1, 0.7);
-    color:antiquewhite;
-    font-size: 22px;
-    cursor: pointer;
-    
-    
-}
-
-button:hover {
-    border-color: #610c0c;
-}
-
-button:active {
-    
-    background-color:rgba(128, 125, 125, 0.7);
-    
-}
-
-*/
