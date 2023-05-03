@@ -13,7 +13,7 @@
   }
 
   body {
-    background-color: #4f4e4cbb;
+    background-color: #fffffebb;
   }
 
   .dashes {
@@ -23,7 +23,7 @@
 
   .container {
     font-size: 16px;
-    background-color: #610c0c;
+    background-color: #76f5f1;
     width: 90vw;
     max-width: 34em;
     position: absolute;
@@ -32,7 +32,7 @@
     left: 50%;
     padding: 3em;
     border-radius: 0.6em;
-    box-shadow: 0 1.2em 2.4em rgba(111, 85, 0, 0.25);
+    box-shadow: 0 1.2em 2.4em rgba(43, 33, 2, 0.25);
   }
 
   #options-container {
@@ -64,7 +64,7 @@
   }
 
   #options-container button.active {
-    background-color: #4f4e4cbb;
+    background-color: #a6edeb;
     border: 3px solid #000000;
     color: #000000;
   }
@@ -99,12 +99,13 @@
     flex-direction: column;
     border-radius: 0.6em;
   }
-
+  
   #user-input-section {
     display: flex;
     justify-content: center;
     font-size: 1.8em;
     margin: 0.6em 0 1.2em 0;
+    gap: 2rem;
   }
 
   canvas {
