@@ -365,6 +365,9 @@ const initializer = () => {
             }
           }
 
+          let click = new Audio('audio/click.mp3');
+          click.play();
+
           btn.disabled = true;
         });
 
