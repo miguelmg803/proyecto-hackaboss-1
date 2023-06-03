@@ -20,6 +20,10 @@ body {
 }
 
 .container {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 30px;
+    text-align: center;
     font-size: 16px;
     background-color: #76f5f1;
     width: 90vw;
@@ -27,7 +31,7 @@ body {
     position: absolute;
     transform: translate(-50%, -50%);
     top: 50%;
-    left: 50%;
+    left: 40%;
     padding: 3em;
     border-radius: 0.6em;
     box-shadow: 0 1.2em 2.4em rgba(43, 33, 2, 0.25);
@@ -35,6 +39,8 @@ body {
 
 #options-container {
     text-align: center;
+    display: flex;
+    flex-direction: row;
 }
 
 #options-container div {
