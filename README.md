@@ -15,4 +15,4 @@
 
 <p>Miguel Angel Martinez - <a href="https://github.com/miguelmg803">@miguelmg803</a></p>
 <p>Miguel Alvarez - <a href="https://github.com/miguel93ap">@miguel93ap</a></p>
-<p>Rodolfo - <a href="https://github.com/RodoAB">@RodoAB</a></p>
+<p>Rodolfo Ancares - <a href="https://github.com/RodoAB">@RodoAB</a></p>
