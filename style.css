@@ -21,35 +21,38 @@ body {
 
 .container {
     font-size: 16px;
+    flex-grow: 1;
+    min-height: 100vh;
+    max-width: 800px;
+    margin: 0 auto;
     background-color: #76f5f1;
-    width: 70%;
-    max-width: 500px;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
     padding: 3em;
-    border-radius: 0.6em;
     box-shadow: 0 1.2em 2.4em rgba(43, 33, 2, 0.25);
 }
 
 #options-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
 }
 
-#options-container div {
-    width: 70%;
-    margin: 1.2em 0 2.4em 0;
+#options-container > div {
+    display: flex;
+    justify-content: center;
+    gap: 0.3rem;
+    margin: 20px 20px;
+    padding: 0% 5%;
 }
 
 #options-container button {
-    padding: 0.6em 1.2em;
+    padding: 4px;
     border: 3px solid #000000;
     background-color: #ffffff;
     color: #000000;
     border-radius: 0.3em;
     text-transform: capitalize;
-    font-size: 20px;
+    font-size: 17px;
     cursor: pointer;
 }
 
@@ -66,7 +69,6 @@ body {
 }
 
 .letter-container {
-    width: 70%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -104,9 +106,11 @@ body {
     gap: 0.8rem;
 }
 
-canvas {
-    display: block;
-    margin: auto;
+canvas#canvas {
+    display: flex;
+    justify-content: center;
+    width: 65%;
+    padding: 2% 2% 2% 2%;
     border: 1px solid #000000;
 }
 
