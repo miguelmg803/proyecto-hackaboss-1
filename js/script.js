@@ -1,6 +1,6 @@
 'use strict'
 
-//Definimos las referencias iniciales que vayamos a utilizar
+// Definimos las referencias iniciales que vayamos a utilizar.
 const letterContainer = document.getElementById("letter-container");
 const optionsContainer = document.getElementById("options-container");
 const userInputSection = document.getElementById("user-input-section");
@@ -10,28 +10,28 @@ const canvas = document.getElementById("canvas");
 const resultText = document.getElementById("result-text");
 
 const saveStateWord = (word) => {
-  // Guardamos la palabra aleatoria
+  // Guardamos la palabra aleatoria.
   localStorage.setItem('randomWord', word);
 };
 
 const saveStateOption = (opcion) => {
-  // Guardamos la opcion que hemos elegido
+  // Guardamos la opción que hemos elegido.
   localStorage.setItem('opcion', opcion);
 };
 
 const loadStateWord = (word) => {
-  // Cargamos la palabra aleatoria
+  // Cargamos la palabra aleatoria.
   let i = localStorage.getItem('randomWord', word);
   return i
 };
 
 const loadStateOption = (opcion) => {
-  // Cargamos la opcion
+  // Cargamos la opción.
   let i = localStorage.getItem('opcion', opcion);
   return i
 };
 
-//Objeto opciones donde dentro de el tiene 3 propiedades que son las listas con las opciones en un array
+// Objeto opciones, donde dentro tiene 3 propiedades que son las listas con las opciones en un array.
 let options = {
   frutas: [
     "Manzana",
@@ -114,7 +114,7 @@ let options = {
   ],
 };
 
-//Objeto letras donde dentro de el tiene 1 propiedad que son las letras en un Array
+// Objeto letras donde dentro tiene 1 propiedad que son las letras en un Array.
 let letters = {
     letras: [
       "A",
@@ -147,15 +147,15 @@ let letters = {
     ],
   };
 
-//Definimos los contadores que luego utilizaremos
+// Definimos los contadores que luego utilizaremos.
 let winCount = 0;
 let loseCount = 0;
 
 let chosenWord = loadStateWord();
 
-//Mostramos las opciones a elegir
+// Mostramos las opciones a elegir.
 
-  //Si ya se ha elegido previamente una opcion y no se ha creado una nueva partida desactiva los botones de opciones
+  // Si ya se ha elegido previamente una opción y no se ha creado una nueva partida, desactiva los botones de opciones.
   const displayOptionsLoad = () => {
 
     optionsContainer.innerHTML += `<h3>Selecciona una Tematica</h3>`;
@@ -196,14 +196,14 @@ const blocker = () => {
 };
 
 
-//Creamos una funcion donde elegiremos la palabra aleatoria del array que hayamos elegido
+// Creamos una función donde elegiremos la palabra aleatoria del array que hayamos elegido.
 const generateWord = (optionValue) => {
 
   saveStateOption(optionValue)
 
   let optionsButtons = document.querySelectorAll(".options");
 
-  // Si el valor de optionValue es igual le añadimos una clase "active" para resaltarla
+  // Si el valor de optionValue es igual le añadimos una clase "active" para resaltarla.
   optionsButtons.forEach((button) => {
     if (button.innerText.toLowerCase() === optionValue) {
       button.classList.add("active");
@@ -220,7 +220,7 @@ const generateWord = (optionValue) => {
   userInputSection.innerText = "";
 
   let optionArray = options[optionValue];
-  //Escogemos una palabra aleatoria dentro del array elegido
+  // Escogemos una palabra aleatoria dentro del array elegido.
   chosenWord = optionArray[Math.floor(Math.random() * optionArray.length)];
   chosenWord = chosenWord.toUpperCase();
 
@@ -229,7 +229,7 @@ const generateWord = (optionValue) => {
     button.disabled = false;
   });
 
-  //Remplazamos cada letra con un guion bajo y un spam
+  // Reemplazamos cada letra con un guión bajo y un span.
   let displayItem = chosenWord.replace(/./g, '<span class="dashes">_</span>');
 
   userInputSection.innerHTML = displayItem;
@@ -244,19 +244,19 @@ const newGame = () => {
   initializer()
 }
 
-//Declaramos la funciona inicial la cual se llamara cuando el usuario carge la pagina o haga una nueva partida
+// Declaramos la función inicial, la cual se llamará cuando el usuario cargue la página o inicie una nueva partida.
 const initializer = () => {
   
   if (loadStateWord() == undefined) {
 
-      //Borramos todo el contenido y escondemos las letras y el boton de nueva partida
+      // Borramos todo el contenido, escondemos las letras y el botón de nueva partida.
       userInputSection.innerHTML = "";
       optionsContainer.innerHTML = "";
       letterContainer.classList.add("hide");
       newGameContainer.classList.add("hide");
       letterContainer.innerHTML = "";
     
-      //Creamos todos los botones con sus letras
+      // Creamos todos los botones con sus letras.
         for (let i = 0; i < letters.letras.length; i++) {
           let button = document.createElement("button");
           button.classList.add("letters");
@@ -268,7 +268,7 @@ const initializer = () => {
           clickBtn(button)
         }
     
-      //Desactivamos las letras hasta que no hayamos elegido una opcion
+      // Desactivamos las letras hasta que no hayamos elegido una opción.
       let btnDis = document.querySelectorAll(".letters")
       btnDis.forEach((button) => {
         button.disabled = true;
@@ -286,7 +286,7 @@ const initializer = () => {
       optionsContainer.innerHTML = "";
       letterContainer.innerHTML = "";
 
-    //Creamos todos los botones con sus letras
+    // Creamos todos los botones con sus letras.
       for (let i = 0; i < letters.letras.length; i++) {
         let button = document.createElement("button");
         button.classList.add("letters");
@@ -321,7 +321,7 @@ const initializer = () => {
     
     }
 
-    //Hacemos la funciona clickBtn para crear un enventlistener que gestione la letra que hemos seleccionado
+    // Escribimos la función clickBtn para crear un eventListener que gestione la letra que hemos seleccionado.
     function clickBtn(btn) {
 
         btn.addEventListener("click", () => {
@@ -329,7 +329,7 @@ const initializer = () => {
           let charArray = chosenWord.split("");
           
           let dashes = document.getElementsByClassName("dashes");
-          //Si el array contiene la letra que hayamos seleccionado, remplazamos el guion por la letra,si no sumamos un fallo y lo dibujamos.
+          // Si el array contiene la letra que hayamos seleccionado, reemplazamos el guión por la letra, si no, sumamos un fallo y lo dibujamos.
           if (charArray.includes(btn.innerText)) {
             charArray.forEach((char, index) => {
                 
@@ -338,10 +338,10 @@ const initializer = () => {
                 dashes[index].innerText = char;
                 
                 winCount += 1;
-                //Si la variable equivale al tamaño de la letra dariamos la partida como ganada
+                // Si la variable equivale al tamaño de la letra daríamos la partida como ganada.
                 if (winCount == charArray.length) {
                   resultText.innerHTML = `<h2 class='win-msg'>Has Ganado!!</h2><p>La palabra era: <span>${chosenWord}</span></p>`;
-                    //Definimos beat, para poder ejecutarlo y reproducir un audio
+                    // Definimos beat, para poder ejecutarlo y reproducir un audio
                     let beat = new Audio('audio/win.mp3');
                     beat.play();
 
@@ -354,7 +354,7 @@ const initializer = () => {
 
             loseCount += 1;
 
-            //Dibujamos el muñeco dependiendo de el numero que haya en la variable loseCount
+            // Dibujamos el muñeco dependiendo del número que haya en la variable loseCount.
             drawMan(loseCount);
 
             if (loseCount == 6) {
@@ -389,51 +389,51 @@ const canvasCreator = () => {
     context.stroke();
   };
 
-  //Dibujamos la cabeza
+  // Dibujamos la cabeza.
   const head = () => {
     context.beginPath();
     context.arc(70, 30, 10, 0, Math.PI * 2, true);
     context.stroke();
   };
 
-  //Dibujamos el cuerpo
+  // Dibujamos el cuerpo.
   const body = () => {
     drawLine(70, 40, 70, 80);
   };
 
-  //Dibujamos el brazo izquierdo
+  // Dibujamos el brazo izquierdo.
   const leftArm = () => {
     drawLine(70, 50, 50, 70);
   };
 
-  //Dibujamos el brazo derecho
+  // Dibujamos el brazo derecho.
   const rightArm = () => {
     drawLine(70, 50, 90, 70);
   };
 
-  //Dibujamos el pie izquierdo
+  // Dibujamos el pie izquierdo.
   const leftLeg = () => {
     drawLine(70, 80, 50, 110);
   };
 
-  //Dibujamos el pie derecho
+  // Dibujamos el pie derecho.
   const rightLeg = () => {
     drawLine(70, 80, 90, 110);
   };
 
-  //Dibujamos el contorno donde ira el cuerpo
+  // Dibujamos el contorno donde irá el cuerpo.
   const initialDrawing = () => {
 
-    //Limpiamos el canvas
+    // Limpiamos el canvas.
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     
-    //Linea inferior 
+    // Línea inferior. 
     drawLine(10, 130, 130, 130);
-    //Linea de la izquierda
+    // Línea de la izquierda.
     drawLine(10, 10, 10, 131);
-    //Linea superior
+    // Línea superior.
     drawLine(10, 10, 70, 10);
-    //Linea superior vertical derecha
+    // Línea superior vertical derecha.
     drawLine(70, 10, 70, 20);
   };
 
